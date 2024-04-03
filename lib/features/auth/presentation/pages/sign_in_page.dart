@@ -2,13 +2,13 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todoapp/core/navigation/router.dart';
 import 'package:todoapp/features/auth/presentation/providers/auth_provider.dart';
 import 'package:todoapp/features/auth/presentation/widgets/auth_field.dart';
 
+import '../../../../core/navigation/router.dart';
 
-class SignUpPage extends ConsumerWidget {
-  const SignUpPage({super.key});
+class SignInPage extends ConsumerWidget {
+  const SignInPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,7 +30,7 @@ class SignUpPage extends ConsumerWidget {
         children: [
           Opacity(
             opacity: user.isLoading ? 0.5 : 1.0,
-            child: const SignUpForm(),
+            child: const SignInForm(),
           ),
           if (user.isLoading) const Center(child: CircularProgressIndicator()),
         ],
@@ -42,9 +42,9 @@ class SignUpPage extends ConsumerWidget {
 
 
 
-class SignUpForm extends ConsumerWidget {
+class SignInForm extends ConsumerWidget {
 
-  const SignUpForm({super.key});
+  const SignInForm({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -61,7 +61,7 @@ class SignUpForm extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Sign up.',
+              'Sign in.',
               style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 30),
@@ -84,17 +84,17 @@ class SignUpForm extends ConsumerWidget {
                   if (formKey.currentState!.validate()) {
                     ref
                         .read(authNotifierProvider.notifier)
-                        .onSignUpButtonClick(
+                        .onSignInButtonClick(
                       emailController.text,
                       passwordController.text,
                     );
                   }
                 },
-                child: const Text("Sign Up"),
+                child: const Text("Sign In"),
               ),
             ),
             const SizedBox(height: 15),
-            const SignInText(),
+            const SignUpText(),
           ],
         ),
       ),
@@ -102,8 +102,8 @@ class SignUpForm extends ConsumerWidget {
   }
 }
 
-class SignInText extends StatelessWidget {
-  const SignInText({super.key});
+class SignUpText extends StatelessWidget {
+  const SignUpText({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -111,18 +111,18 @@ class SignInText extends StatelessWidget {
 
     return RichText(
       text: TextSpan(
-        text: "Already have an account?",
+        text: "Don't have an account?",
         style: appTheme.textTheme.titleMedium,
         children: [
           TextSpan(
-            text: ' Sign in?',
+            text: ' Sign Up?',
             style: appTheme.textTheme.titleMedium?.copyWith(
               color: appTheme.colorScheme.inversePrimary,
               fontWeight: FontWeight.bold,
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                context.push(SIGN_IN_PATH);
+                context.push(SIGN_UP_PATH);
               },
           )
         ],
@@ -130,5 +130,4 @@ class SignInText extends StatelessWidget {
     );
   }
 }
-
 

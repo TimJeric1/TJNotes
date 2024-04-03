@@ -1,25 +1,52 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todoapp/features/auth/presentation/pages/sign_up_page.dart';
+import 'package:todoapp/core/navigation/router.dart';
+import 'package:todoapp/firebase_options.dart';
+import 'core/theme/app_theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Todo App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final router = ref.read(goRouterProvider);
+    final appThemeLight = ref.read(appThemeProvider(Brightness.light));
+    final appThemeDark = ref.read(appThemeProvider(Brightness.dark));
+
+    final systemUiIconsBrightness =
+    MediaQuery.platformBrightnessOf(context) == Brightness.light
+        ? Brightness.dark
+        : Brightness.light;
+
+    final appColorScheme = MediaQuery.platformBrightnessOf(context) == Brightness.light
+        ? appThemeLight.colorScheme
+        : appThemeDark.colorScheme;
+
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: appColorScheme.surface,
+        systemNavigationBarColor: appColorScheme.surface,
+        systemNavigationBarIconBrightness: systemUiIconsBrightness,
+        statusBarIconBrightness: systemUiIconsBrightness,
       ),
-      home: const SignUpPage(),
+    );
+
+    return MaterialApp.router(
+      routerConfig: router,
+      title: 'Todo App',
+      theme: appThemeLight,
+      themeMode: ThemeMode.system,
+      darkTheme: appThemeDark,
     );
   }
 }
