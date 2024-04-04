@@ -41,3 +41,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# My own git ignored
+*.g.dart
+package_rename_config.yaml
+.fvm/
