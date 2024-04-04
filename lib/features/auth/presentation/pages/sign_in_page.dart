@@ -2,10 +2,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todoapp/features/auth/presentation/providers/auth_provider.dart';
-import 'package:todoapp/features/auth/presentation/widgets/auth_field.dart';
 
 import '../../../../core/navigation/router.dart';
+import '../providers/auth_provider.dart';
+import '../widgets/auth_field.dart';
 
 class SignInPage extends ConsumerWidget {
   const SignInPage({super.key});

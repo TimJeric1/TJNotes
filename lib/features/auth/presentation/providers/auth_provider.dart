@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todoapp/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:todoapp/features/auth/domain/usecases/user_sign_in.dart';
-import 'package:todoapp/features/auth/domain/usecases/user_sign_up.dart';
+
+import '../../data/repositories/auth_repository_impl.dart';
+import '../../domain/usecases/user_sign_in.dart';
+import '../../domain/usecases/user_sign_up.dart';
 
 part 'auth_provider.g.dart';
 

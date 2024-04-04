@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todoapp/features/auth/domain/repositories/auth_repository.dart';
+
+import '../../domain/repositories/auth_repository.dart';
 
 
 part 'auth_repository_impl.g.dart';

@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todoapp/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:todoapp/features/auth/domain/repositories/auth_repository.dart';
+
+import '../../data/repositories/auth_repository_impl.dart';
+import '../repositories/auth_repository.dart';
 
 part 'user_sign_up.g.dart';
 
