@@ -20,22 +20,20 @@ final firebaseAuthProvider = AutoDisposeProvider<FirebaseAuth>.internal(
 );
 
 typedef FirebaseAuthRef = AutoDisposeProviderRef<FirebaseAuth>;
-String _$authRepositoryImplHash() =>
-    r'9ef3108f5a46928ca8ffa6230d73d35f3683fa8d';
+String _$authRepositoryHash() => r'fd36f1da17d1e0dffabeb333f1dadc4fff83add7';
 
-/// See also [authRepositoryImpl].
-@ProviderFor(authRepositoryImpl)
-final authRepositoryImplProvider =
-    AutoDisposeProvider<AuthRepositoryImpl>.internal(
-  authRepositoryImpl,
-  name: r'authRepositoryImplProvider',
+/// See also [authRepository].
+@ProviderFor(authRepository)
+final authRepositoryProvider = AutoDisposeProvider<AuthRepository>.internal(
+  authRepository,
+  name: r'authRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$authRepositoryImplHash,
+      : _$authRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef AuthRepositoryImplRef = AutoDisposeProviderRef<AuthRepositoryImpl>;
+typedef AuthRepositoryRef = AutoDisposeProviderRef<AuthRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

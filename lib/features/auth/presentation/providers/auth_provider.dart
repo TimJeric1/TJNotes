@@ -20,12 +20,12 @@ class AuthNotifier extends _$AuthNotifier {
     return currentUser;
   }
 
-  onSignInButtonClick(String email, String password) async {
+  signIn(String email, String password) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() => _userSignIn.call(email, password) );
   }
 
-  onSignUpButtonClick(String email, String password) async {
+  signUp(String email, String password) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() => _userSignUp.call(email, password) );
   }

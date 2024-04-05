@@ -16,7 +16,7 @@ class SignInPage extends ConsumerWidget {
     final user = ref.watch(authNotifierProvider);
 
     ref.listen(authNotifierProvider, (previousUser, user) {
-      if (user.value != null) context.go("$SAMPLE_PATH/${user.value!.email}");
+      if (user.value != null) context.go(NOTES_PAGE_PATH);
       if (user.hasError) {
         final error = user.asError?.error;
         if(error == null) return;
@@ -84,7 +84,7 @@ class SignInForm extends ConsumerWidget {
                   if (formKey.currentState!.validate()) {
                     ref
                         .read(authNotifierProvider.notifier)
-                        .onSignInButtonClick(
+                        .signIn(
                       emailController.text,
                       passwordController.text,
                     );
@@ -122,7 +122,7 @@ class SignUpText extends StatelessWidget {
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                context.push(SIGN_UP_PATH);
+                context.push(SIGN_UP_PAGE_PATH);
               },
           )
         ],

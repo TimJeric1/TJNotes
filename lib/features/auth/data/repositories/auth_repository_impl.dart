@@ -12,7 +12,7 @@ FirebaseAuth firebaseAuth(FirebaseAuthRef ref){
 }
 
 @riverpod
-AuthRepositoryImpl authRepositoryImpl(AuthRepositoryImplRef ref){
+AuthRepository authRepository(AuthRepositoryRef ref){
   final firebaseAuth = ref.read(firebaseAuthProvider);
   return AuthRepositoryImpl(firebaseAuth);
 }

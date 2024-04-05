@@ -8,7 +8,7 @@ part 'user_sign_in.g.dart';
 
 @riverpod
 UserSignIn userSignIn(UserSignInRef ref) {
-  final authRepository = ref.read(authRepositoryImplProvider);
+  final authRepository = ref.read(authRepositoryProvider);
   return UserSignIn(authRepository);
 }
 
