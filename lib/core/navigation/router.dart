@@ -32,7 +32,7 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '$EDIT_NOTE_PAGE_PATH/:note_uuid',
         builder: (context, state) => EditNotePage(
-          note_uuid: state.pathParameters['note_uuid'],
+          noteUuid: state.pathParameters['note_uuid'],
         ),
       ),
       GoRoute(

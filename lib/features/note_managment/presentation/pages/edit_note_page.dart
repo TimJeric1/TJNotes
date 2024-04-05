@@ -1,53 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:tjnotes/core/util/debounce.dart';
 import 'package:tjnotes/features/note_managment/presentation/providers/note_managment_provider.dart';
 
 import '../../domain/entities/note_entity.dart';
 
 class EditNotePage extends ConsumerWidget {
-  final String? note_uuid;
+  final String? noteUuid;
 
   const EditNotePage({
     Key? key,
-    this.note_uuid,
+    this.noteUuid,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Note? note;
-    if (note_uuid == null)
+    if (noteUuid == null)
       note = Note(title: '', content: '');
     else
       note = ref
           .read(noteManagmentNotifierProvider.notifier)
-          .getNoteByUuid(uuid: note_uuid!);
+          .getNoteByUuid(uuid: noteUuid!);
 
     TextEditingController titleController =
         TextEditingController(text: note?.title);
     TextEditingController contentController =
         TextEditingController(text: note?.content);
 
+    void updateNote() {
+      ref.read(debouncerProvider).run(
+        () {
+          final updatedNote = Note(
+            uuid: note?.uuid,
+            title: titleController.text,
+            content: contentController.text,
+          );
+          ref
+              .read(noteManagmentNotifierProvider.notifier)
+              .addOrUpdateNote(note: updatedNote);
+        },
+        const Duration(milliseconds: 500),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Note'),
-        actions: note == null
-            ? []
-            : [
-                IconButton(
-                  onPressed: () {
-                    final updatedNote = Note(
-                      uuid: note?.uuid,
-                      title: titleController.text,
-                      content: contentController.text,
-                    );
-                    ref
-                        .read(noteManagmentNotifierProvider.notifier)
-                        .addOrUpdateNote(note: updatedNote);
-                  },
-                  icon: const Icon(Icons.save),
-                ),
-              ],
       ),
       body: note == null
           ? Center(
@@ -65,16 +65,18 @@ class EditNotePage extends ConsumerWidget {
               ),
             )
           : Theme(
-              data: Theme.of(context)
-                  .copyWith(inputDecorationTheme: const InputDecorationTheme(
-                border: InputBorder.none
-              )),
+              data: Theme.of(context).copyWith(
+                  inputDecorationTheme:
+                      const InputDecorationTheme(border: InputBorder.none)),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     TextField(
+                      onChanged: (_) {
+                        updateNote();
+                      },
                       controller: titleController,
                       decoration: const InputDecoration(
                         hintText: 'Enter Title',
@@ -85,6 +87,9 @@ class EditNotePage extends ConsumerWidget {
                     const SizedBox(height: 16),
                     Expanded(
                       child: TextField(
+                        onChanged: (_) {
+                          updateNote();
+                        },
                         controller: contentController,
                         decoration: const InputDecoration(
                           hintText: 'Enter Content',
